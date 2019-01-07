@@ -26,11 +26,120 @@ Dăm click pe baza de date, va trebui să setam niște regului de firewall, sus 
 
 <img src="img/setup3.PNG" alt="hi" class="inline"/>
 
+Acum mai trebuie să ne facem un tabel. Pentru asta, mergem pe baza noastra de date, Query editor(preview), ne logăm și va apărea o consolă unde putem scrie. Acolo băgam
+
+```markdown
+
+CREATE TABLE People (
+    ID int IDENTITY(1,1) PRIMARY KEY,
+    Nume varchar(255) NOT NULL,
+    Varsta int,
+    Username varchar(255),
+    Parola varchar(255)
+);
+
+```
+
+Câmpurile trebuie să aiba același nume cu cele din model. Dupa, putem interoga, gen
+
+```markdown
+
+INSERT INTO People (Nume, Varsta, Username, Parola)
+VALUES ('Ceva Nume', 13, 'Ceva username', 'Ceva parola');
+
+```
+
+Nice! 
+
+
 ### Să trecem la cod
 
 Deschidem visual studio. File > New > Project > Visual C# > Web > .NET Core > ASP.NET Core Web App. Îi punem numele restfulAPI și dam ok. În noua căsuța alegem API, suntem atenți să fie debifat Enable docker suport și bifat Configure for HTTPS. Ni se creează proiectul și-l rulăm. Ar trebui să obținem 
 
 <img src="img/setup4.PNG" alt="hi" class="inline"/>
+
+Închidem programul și creăm un nou folder pe care îl numim Models. În interiorul acestuia facem o clasa cu numele dummy.cs în care vom specifica atributele obiectului cu care ne vom juca. Astfel
+
+```markdown
+
+    public class dummyModel
+    {
+        private int Id { get; set; }
+
+        private string Nume { get; set; }
+
+        private int Varsta { get; set; }
+
+        private string Username { get; set; }
+
+        private string Parola { get; set; }
+    }
+    
+```
+Înainte de a ne face primele rute, avem nevoie de acces la baza de date. Pentru asta mergem în appsettings.json și adăugăm următorul cod unde server = "numele sv tau".database.windows.net, Database = "numele bazei tale de date", User Id = "Id-ul de la sv", Password= "parola de la sv". În cazul în care nu ți-ai făcut cont pe azure ele vor ramane exact ca în codul urmator.
+
+```markdown
+
+{
+  "ConnectionStrings": {
+    "UserConnection": "Server=angulartestsv.database.windows.net;Database=AngularTEST; User Id=horatiu.necula; Password=#Dwcdtryv7727"
+  },
+
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
+
+```
+
+Acest JSON ne ofera stringul de conectare pe care-l vom folosi pentru a ajunge la baza noastră de date. Pentru asta avem nevoie de un nou folder, Data, în interiorul căruia vom avea o clasa dataContext.cs ce conține
+
+```markdown
+using Microsoft.EntityFrameworkCore;
+using System.IO;
+using restfulAPI.Models;
+using Microsoft.Extensions.Configuration;
+
+namespace restfulAPI.Data
+{
+    public class dataContext : DbContext
+    {
+        protected override void OnConfiguring(DbContextOptionsBuilder OptionsBuilder)
+        {
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
+                                .AddJsonFile("appsettings.json");
+
+            var configuration = builder.Build();
+            OptionsBuilder.UseSqlServer(configuration["ConnectionStrings:UserConnection"]);
+        }
+
+        private DbSet<dummyModel> People { get; set; }
+    }
+}
+
+```
+
+Long story, short aici ne conectăm la baza noastra de date și tot aici ne declaram tabelele pe care le vom folosi. De exemplu daca mai aveam un tabel declaram un nou private DbSet<nume_model> nume_tabel {get; set;}
+
+Acum vom merge in folderul Controllers și vom șterge ValuesController.cs și vom face noi o noua clasă dummyController.cs ce va moșteni interfata Controller
+```markdown
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace restfulAPI.Controllers
+{
+    public class dummyController : Controller
+    {
+    }
+}
+
+```
 
 ```markdown
 Syntax highlighted code block
