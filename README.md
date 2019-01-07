@@ -5,12 +5,16 @@ Sunt tot eu Horațiu, poate că m-ai văzut luni la workshop, poate că nu. Avâ
 Well, ne propunem să realizăm primii pași în back-end și front-end, puțin și entity framework. Vom învăța despre modele, view-uri și controlăre. La final vom avea o mica aplicație prin care ne putem crea un cont iar mai apoi să ne logăm.
 
 Înainte să facem set-up și să trecem la cod recomand să citiți documentația de mai jos, realizată de colegii mei.
-[C# și ASP.NET](https://drive.google.com/drive/u/1/folders/1txn7mG5CfFEbXFMJWlhkFHDR5scej55z)
+[C# și ASP.NET](https://drive.google.com/drive/u/1/folders/1txn7mG5CfFEbXFMJWlhkFHDR5scej55z) și 
 [AngularJS](https://drive.google.com/drive/u/1/folders/1txn7mG5CfFEbXFMJWlhkFHDR5scej55z)
 
-### Căteva concepte
+### De ce avem nevoie
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+[Visual studio 2015 +] (https://visualstudio.microsoft.com/vs/community/) cu extensie de .Net CORE
+
+<img src="img/setup1.PNG" alt="hi" class="inline"/>
+
+[Postman]
 
 ```markdown
 Syntax highlighted code block
