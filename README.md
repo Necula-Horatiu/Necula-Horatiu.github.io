@@ -1,10 +1,14 @@
-## Welcome to GitHub Pages
+## Hei, salut
 
-You can use the [editor on GitHub](https://github.com/Necula-Horatiu/Necula-Horatiu.github.io/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Sunt tot eu Horațiu, poate că m-ai văzut luni la workshop, poate că nu. Având în vedere că nu am reușit să termin tot ce mi-am propus am zis să iau totul de la capăt dar de această dată într-un ritm mai lent.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Well, ne propunem să realizăm primii pași în back-end și front-end, puțin și entity framework. Vom învăța despre modele, view-uri și controlăre. La final vom avea o mica aplicație prin care ne putem crea un cont iar mai apoi să ne logăm.
 
-### Markdown
+Înainte să facem set-up și să trecem la cod recomand să citiți documentația de mai jos, realizată de colegii mei.
+[C# și ASP.NET](https://drive.google.com/drive/u/1/folders/1txn7mG5CfFEbXFMJWlhkFHDR5scej55z)
+[AngularJS](https://drive.google.com/drive/u/1/folders/1txn7mG5CfFEbXFMJWlhkFHDR5scej55z)
+
+### Căteva concepte
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
