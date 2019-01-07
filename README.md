@@ -10,11 +10,27 @@ Well, ne propunem să realizăm primii pași în back-end și front-end, puțin 
 
 ### De ce avem nevoie
 
-[Visual studio 2015 +] (https://visualstudio.microsoft.com/vs/community/) cu extensie de .Net CORE
+[Visual studio 2015 +](https://visualstudio.microsoft.com/vs/community/) cu extensie de .Net CORE. Foarte important să nu uitați să bifași la instalare ASP.NET and web dev și Azure dev. În caz ca deja avți visual-ul instalat pentru a modifica ceva mergeți în Control Panel / Visual studio 2017 / Modify
 
 <img src="img/setup1.PNG" alt="hi" class="inline"/>
 
-[Postman]
+[Postman](https://www.getpostman.com/) 
+
+Cont pe [Azure for students](https://azure.microsoft.com/en-us/free/students/) cu emailul de student
+În caz că nu ești student sau din orice alt motiv nu îți poți face cont acolo te vei folosi de credențialele mele.
+Dupa ce ți-ai facut cont și ai intrat pe [portal](https://portal.azure.com) vei găsi în stanga "Create a resource" > "SQL Database" > "Completam campurile (database name / resource group / facem si un nou server ) > "Create". Asteptam sa se faca deploy și dacă mergem pe pagina principală o să vedem la All resources baza de date respectiv server-ul nostru.
+
+Dăm click pe baza de date, va trebui să setam niște regului de firewall, sus avem Add client IP și punem la START IP: 0.0.0.0 și la END IP: 255.255.255.255 iar apoi Save.
+
+<img src="img/setup2.PNG" alt="hi" class="inline"/>
+
+<img src="img/setup3.PNG" alt="hi" class="inline"/>
+
+### Să trecem la cod
+
+Deschidem visual studio. File > New > Project > Visual C# > Web > .NET Core > ASP.NET Core Web App. Îi punem numele restfulAPI și dam ok. În noua căsuța alegem API, suntem atenți să fie debifat Enable docker suport și bifat Configure for HTTPS. Ni se creează proiectul și-l rulăm. Ar trebui să obținem 
+
+<img src="img/setup4.PNG" alt="hi" class="inline"/>
 
 ```markdown
 Syntax highlighted code block
