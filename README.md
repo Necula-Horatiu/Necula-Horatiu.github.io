@@ -52,7 +52,7 @@ VALUES ('Ceva Nume', 13, 'Ceva username', 'Ceva parola');
 Nice! 
 
 
-### Să trecem la cod
+### Back-end
 
 Deschidem visual studio. File > New > Project > Visual C# > Web > .NET Core > ASP.NET Core Web App. Îi punem numele restfulAPI și dam ok. În noua căsuța alegem API, suntem atenți să fie debifat Enable docker suport și bifat Configure for HTTPS. Ni se creează proiectul și-l rulăm. Ar trebui să obținem 
 
@@ -116,7 +116,7 @@ namespace restfulAPI.Data
             OptionsBuilder.UseSqlServer(configuration["ConnectionStrings:UserConnection"]);
         }
 
-        private DbSet<dummyModel> People { get; set; }
+        public DbSet<dummyModel> People { get; set; }
     }
 }
 
@@ -124,22 +124,77 @@ namespace restfulAPI.Data
 
 Long story, short aici ne conectăm la baza noastra de date și tot aici ne declaram tabelele pe care le vom folosi. De exemplu daca mai aveam un tabel declaram un nou private DbSet<nume_model> nume_tabel {get; set;}
 
-Acum vom merge in folderul Controllers și vom șterge ValuesController.cs și vom face noi o noua clasă dummyController.cs ce va moșteni interfata Controller
+Acum vom merge in folderul Controllers și vom șterge ValuesController.cs și vom face noi o noua clasă dummyController.cs ce va moșteni interfata Controller și vom crea primele rute
 ```markdown
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using restfulAPI.Data;
+using restfulAPI.Models;
 
 namespace restfulAPI.Controllers
 {
+    [Route("api/dummy")]
     public class dummyController : Controller
     {
+        dataContext db = new dataContext();
     }
 }
 
 ```
+Good practice, este indicat ca rutele să înceapă cu api urmate de o acțiune / instanță destul de importantă pentru api-ul nostru.
+
+În continuare vrem sa facem 3 metode, 1 request pentru get si 2 pentru post. Astfel
+
+```markdown
+
+    // metoda ce ne va returna toate instantele din baza de date
+    [HttpGet]
+    [Route("")]
+    public IActionResult getDummy()
+    {
+        var dummys = db.People.ToList();
+        return Ok(dummys);
+    }
+
+    // metoda prin care adaugam o noua instanta in baza de date
+    [HttpPost]
+    [Route("")]
+    public IActionResult addDummy([FromBody] dummyModel dummy)
+    {
+        db.People.Add(dummy);
+        db.SaveChanges();
+        return Ok(dummy);
+    }
+
+    // metoda prin care cautam un user in baza de date
+    [HttpPost]
+    [Route("login")]
+    public IActionResult findDummy([FromBody] dummyModel dummy)
+    {
+        var query = from u in db.People
+                    where u.Username == dummy.Username && u.Parola == dummy.Parola
+                    select u;
+
+        return Ok(query.FirstOrDefault());
+    }
+```
+
+Salvăm și ne putem testa rutele. Astfel, rulam programul și se va deschide o pagina https://localhost:5001/api/values. O modificam în https://localhost:5001/api/dummy și ar trebui să obținem toate datele din baza noastră de date.
+
+<img src="img/setup5.PNG" alt="hi" class="inline"/>
+
+De ce se întâmplă asta? Pai dupa cum am văzut in controller am setat ruta principala api/dummy și automat browser-ul face un request de tip GET în momentul în care ne intra pe acea rută. Pentru a testa următoarele două rute avem nevoie de postam. Odată deschis avem grija ca tipul de request sa fie de tipul POST și sa introducem corect URL-ul. Apoi mergem la Body / raw / JSON (application/json) și vom scrie noi un json precum modelul pe care l-am creat. Apăsam send și ar trebui sa primim un OK (avem grija ca aplicația să fie înca deschisă) 
+
+<img src="img/setup6.PNG" alt="hi" class="inline"/>
+
+La fel facem și pentru a 3a rută, singura diferență este că ruta se va modifica din https://localhost:5001/api/dummy în https://localhost:5001/api/dummylogin și avem grija ca datele din json corespunzătoare câmpurilor username și parolă să fie unele valide (de ex cele pe care tocmai le-am introdus) pentru ca requestul să ne întoarcă OK.
+
+Cam asta e partea de back-end, bine înteles acesta se poate extinde foarte mult dar vă las pe voi să descoperiți asta.
+
+### Front-end
 
 ```markdown
 Syntax highlighted code block
