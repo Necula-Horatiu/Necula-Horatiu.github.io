@@ -2,6 +2,8 @@
 
 Sunt tot eu Horațiu, poate că m-ai văzut luni la workshop, poate că nu. Având în vedere că nu am reușit să termin tot ce mi-am propus am zis să iau totul de la capăt dar de această dată într-un ritm mai lent.
 
+În cazul în care ai nevoie doar de cod îl găsești [aici](https://github.com/Necula-Horatiu/Necula-Horatiu.github.io). Pentru orice întrebari mă găsiți pe email / facebook / ig (link-uri la finalul documentului) Ty ^^
+
 Well, ne propunem să realizăm primii pași în back-end și front-end, puțin și entity framework. Vom învăța despre modele, view-uri și controlăre. La final vom avea o mica aplicație prin care ne putem crea un cont iar mai apoi să ne logăm.
 
 Înainte să facem set-up și să trecem la cod recomand să citiți documentația de mai jos, realizată de colegii mei.
