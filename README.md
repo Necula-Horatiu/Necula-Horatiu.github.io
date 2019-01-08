@@ -525,10 +525,12 @@ Acum vom crea o funcție care ia datele introduse de user si le va trimite catre
 
 Ce face această funcție? Ne declaram doua variabile, vm.username și vm.parola pe care le construim în funcție de datele userului. Adică username-ul va fi numele userului lipsit de spațiu și parola este username-ul concatenat cu vârsta. Apoi apelăm metoda postDummy() ce primește ca parametrii datele despre user și le duce la server. În cazul în care totul merge bine vom primi la consola „Succes” în caz negativ vom primi o eroare. Această funcție trebuie să se apeleze când apăsăm butonul „Salveaza-ma” deci să nu uitați să modificați la directiva ng-click. Salvăm, refresh la pagină, întroducem date noi și..
 
-<img src="img/setup12.PNG" alt="hi" class="inline"/>
+<img src="img/setup13.PNG" alt="hi" class="inline"/>
 
 Asemânator se face și pentru form-ul de logare, vă las pe voi să-l rezolvați, în caz de orice problemă ma gasiți ori pe email, ori pe facebook. Mersi frumos pentru timpul acordat și sper ca am fost de ajutor!
 
 email -> horatiu.necula@studentpartner.com / necula.horatiu@gmail.com
+
 facebook -> facebook.com/horatiuw
+
 instagram -> instagram.com/horatiuw
