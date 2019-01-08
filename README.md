@@ -364,30 +364,171 @@ Aceste metode, vor sta la baza tuturor requesturilor voastre și vor fi scrise o
 La fel ca mai sus, ne declarăm un serviciu (angular.module('mainApp').service()) ce primește ca parametrii numele său și alte utilitare pe care vrem să le folosim. Apoi avem o variabila ce are trei atribute, câte unul pentru fiecare ruta pe care vrem să o accesăm. 
 Acum e destul de simplă treaba, pentru metodele de get, trebuie doar să returnam httpService.get(ruta noastra), în schimb pentru metodele post avem nevoie să îi dăm si ce date să ni le salveze, respectiv să le caute în cazul ultimei funcții.
 
+Aici se încheie și treaba cu serviciile, acestea sunt niste metode pe care le veți folosi în tot programul și la care veți lucra mai rar. Adevărata treabaă se întamplă în controlăre. Pentru asta mergem în folderul login, mai exact în login.html unde copiem următorul cod.
+
 ```markdown
-Syntax highlighted code block
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <nav class="navbar navbar-light bg-light">
+            <button class="btn btn-primary">Inregistrare</button>
+            <button class="btn btn-primary">Logare</button>
+        </nav>
+        <div class="container">
+            <form>
+                <div class="form-group">
+                    <label>Nume</label>
+                    <input type="text" class="form-control" placeholder="Introdu numele complet">
+                </div>
+                <div class="form-group">
+                    <label>Varsta</label>
+                    <input type="text" class="form-control" placeholder="Introdu varsta">
+                </div>
+                <button type="submit" class="btn btn-success">Salveaza-ma</button>
+            </form>
 
-# Header 1
-## Header 2
-### Header 3
+            <form>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" class="form-control" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label>Parola</label>
+                    <input type="password" class="form-control" placeholder="Parola">
+                </div>
+                <button type="submit" class="btn btn-success">Logheaza-ma</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+```
+Când rulăm programul ar trebui să obținem
 
-- Bulleted
-- List
+<img src="img/setup10.PNG" alt="hi" class="inline"/>
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+Cum stă treaba în AngularJS? Fiecărui fiser.html îi corespunde un controller, de aceea vom merge în <body> si vom modifica primul <div> astfel <div ng-controller="loginController as vm">. Cine este loginController? Well, este controlărul pe care-l vom face in login.js, de aceea mergem acolo și avem următorul cod.
+    
+```markdown
+    (function () {
+    'use strict'
+    angular.module('mainApp').controller('loginController', ['dataContext', function (dataContext) {
+        var vm = this;
+    }]);
+})();
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Practic, ne declaram un controlăr (angular.module('mainApp').controller()) a cărui instanță o vom cunoaște sub numele de vm (dont ask why, așa se practică). Acum diferitele funcții pe care le vom face în login.js vor fi vazute și în login.html. De exemplu ne dorim ca în momentul în care intram pe pagină să apară doar formularul de înscriere nu și cel de logare. Acesta să apară când apăsăm pe butonul logare. Pentru asta ne declarăm o variabilă pe care o inițializăm cu false și doua funcții, vm.inregistrare() și vm.logare(). Practic avem o booleană care daca e false va arăta forumul de creere cont și daca e adevărată va arăta forumul de logare
 
-### Jekyll Themes
+```markdown
+    vm.login = false
+    
+    vm.inregistrare = function () {
+        vm.login = false;
+    };
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Necula-Horatiu/Necula-Horatiu.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+    vm.logare = function () {
+        vm.login = true;
+    };
+```
 
-### Support or Contact
+Apoi, mergem pe login.html și avem de schimbat câteva chestii. În primul rând trebuie ca butoanele inregistrare / logare să aiba un event de click, pentru acestea mergem la codul de html respectiv acestor butoane si vom folosi directiva ng-click care primeste ca argument o funcție. Practic, când se va da click se va apela funcția respectivă
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+```markdown
+    <button class="btn btn-primary" ng-click="vm.inregistrare()">Inregistrare</button>
+    <button class="btn btn-primary" ng-click="vm.logare()">Logare</button>
+```
+Și încă o chestie, ne vom folosi și de directiva ng-if care primește ca argument o booleana. Atfel, mergem la codul celor doua form-uri și adaugam ng-if="!vm.logare" la primul, respectiv ng-if="vm.logare". Ng-if-ul ne va ajuta să afișam un singur form în funcție de valoarea de adevăr a lui vm.logare
+
+
+```markdown
+    <form ng-if="!vm.login">
+        ...
+        cod
+        ...
+    </form>
+    
+    <form ng-if="vm.login">
+        ...
+        cod
+        ...
+    </form>
+```
+
+Acum pagina ar trebui să arate așa și butoanele să funcționeze
+
+<img src="img/setup11.PNG" alt="hi" class="inline"/>
+
+În continuare, vrem să luam datele pe care user-ul le va introduce în form-ul de inregistrare și să le trimitem către server.
+Pentru asta ne vom folosi de directiva ng-model care primeste ca paramentru un string (sub acel string se va cunoaște elementul din html în javascript). De aceea, mergem în primul form și pentru fiecare input declaram un model, astfel
+
+```markdown
+    <div class="form-group">
+        <label>Nume</label>
+        <input type="text" class="form-control" placeholder="Introdu numele complet" ng-model="vm.nume">
+    </div>
+    <div class="form-group">
+        <label>Varsta</label>
+        <input type="text" class="form-control" placeholder="Introdu varsta" ng-model="vm.varsta">
+    </div>
+```
+Pentru a testa ca totul merge bine, in login.js vom crea o funcție care la apăsarea butonului Salveaza-ma să afișeze textul scris de user. Să nu uitați să îi puneți o directiva de tipul ng-click, butonului. Vom avea 
+
+```markdown
+    vm.test = function () {
+        console.log(vm.nume + " " + vm.varsta);
+    };
+```
+
+Salvăm, dăm refresh la pagină și dupa ce introducem date și apasam butonul, putem vedea în consola (F12) ca apar datele introduse.
+Vrem să luam aceste date și să le trimitem către baza de date. Pentru acest lucru ne vom folosi de metodele din dataContext.js
+
+Vom începe cu prima metoda, getDummy() care ne returnează toți userii din baza noastra de date. Pentru acest lucru avem următoarea bucată de cod, care funcționează tot pe principiul .then() și care ne va afișa la consolă datele din baza de date.
+
+```markdown
+    dataContext.getDummy().then(
+        function (response) {
+            console.log(response.data);
+        },
+        function (err) {
+            console.log(err);
+        }
+    );
+```
+
+!! Atenție !! Pentru ca funția sa se apeleze constant nu vom folosi aceeași construcție ca mai sus de genul vm.func = function().
+Salvăm, dăm refresh la pagină și ar trebui să obținem la consola toate datele din baza de date. (Acea eroare e de la bootstrap, nu ne afecteaza cu nimic)
+
+<img src="img/setup12.PNG" alt="hi" class="inline"/>
+
+Acum vom crea o funcție care ia datele introduse de user si le va trimite catre baza. Astfel
+
+```markdown
+    vm.save = function () {
+        vm.username = vm.nume.replace(/ /g, '');
+        vm.parola = vm.username + vm.varsta;
+        dataContext.postDummy(vm.nume, vm.varsta, vm.username, vm.parola).then(
+            function (response) {
+                console.log('Succes');
+            },
+            function (err) {
+                console.log(err);
+            }
+        );
+    };
+```
+
+Ce face această funcție? Ne declaram doua variabile, vm.username și vm.parola pe care le construim în funcție de datele userului. Adică username-ul va fi numele userului lipsit de spațiu și parola este username-ul concatenat cu vârsta. Apoi apelăm metoda postDummy() ce primește ca parametrii datele despre user și le duce la server. În cazul în care totul merge bine vom primi la consola „Succes” în caz negativ vom primi o eroare. Această funcție trebuie să se apeleze când apăsăm butonul „Salveaza-ma” deci să nu uitați să modificați la directiva ng-click. Salvăm, refresh la pagină, întroducem date noi și..
+
+<img src="img/setup12.PNG" alt="hi" class="inline"/>
+
+Asemânator se face și pentru form-ul de logare, vă las pe voi să-l rezolvați, în caz de orice problemă ma gasiți ori pe email, ori pe facebook. Mersi frumos pentru timpul acordat și sper ca am fost de ajutor!
+
+email -> horatiu.necula@studentpartner.com / necula.horatiu@gmail.com
+facebook -> facebook.com/horatiuw
+instagram -> instagram.com/horatiuw
