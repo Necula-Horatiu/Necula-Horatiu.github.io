@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div ng-controller="loginController as vm">
+        <nav class="navbar navbar-light bg-light">
+            <button class="btn btn-primary" ng-click="vm.inregistrare()">Inregistrare</button>
+            <button class="btn btn-primary" ng-click="vm.logare()">Logare</button>
+        </nav>
+        <div class="container">
+            <form ng-if="!vm.login">
+                <div class="form-group">
+                    <label>Nume</label>
+                    <input type="text" class="form-control" placeholder="Introdu numele complet" ng-model="vm.nume">
+                </div>
+                <div class="form-group">
+                    <label>Varsta</label>
+                    <input type="text" class="form-control" placeholder="Introdu varsta" ng-model="vm.varsta">
+                </div>
+                <button type="submit" class="btn btn-success" ng-click="vm.save()">Salveaza-ma</button>
+             </form>
+
+                <form ng-if="vm.login">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" class="form-control" placeholder="Username" ng-model="vm.username">
+                    </div>
+                    <div class="form-group">
+                        <label>Parola</label>
+                        <input type="password" class="form-control" placeholder="Parola" ng-model="vm.pass">
+                    </div>
+                    <button type="submit" class="btn btn-success" ng-click="vm.log()">Logheaza-ma</button>
+                </form>
+        </div>
+    </div>
+</body>
+</html>

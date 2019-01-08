@@ -1,0 +1,14 @@
+D:\AngularJSandC#\restfulAPI\restfulAPI\bin\Debug\netcoreapp2.1\restfulAPI.deps.json
+D:\AngularJSandC#\restfulAPI\restfulAPI\bin\Debug\netcoreapp2.1\restfulAPI.runtimeconfig.json
+D:\AngularJSandC#\restfulAPI\restfulAPI\bin\Debug\netcoreapp2.1\restfulAPI.runtimeconfig.dev.json
+D:\AngularJSandC#\restfulAPI\restfulAPI\bin\Debug\netcoreapp2.1\restfulAPI.dll
+D:\AngularJSandC#\restfulAPI\restfulAPI\bin\Debug\netcoreapp2.1\restfulAPI.pdb
+D:\AngularJSandC#\restfulAPI\restfulAPI\obj\Debug\netcoreapp2.1\restfulAPI.csprojAssemblyReference.cache
+D:\AngularJSandC#\restfulAPI\restfulAPI\obj\Debug\netcoreapp2.1\restfulAPI.csproj.CoreCompileInputs.cache
+D:\AngularJSandC#\restfulAPI\restfulAPI\obj\Debug\netcoreapp2.1\restfulAPI.RazorAssemblyInfo.cache
+D:\AngularJSandC#\restfulAPI\restfulAPI\obj\Debug\netcoreapp2.1\restfulAPI.RazorAssemblyInfo.cs
+D:\AngularJSandC#\restfulAPI\restfulAPI\obj\Debug\netcoreapp2.1\restfulAPI.AssemblyInfoInputs.cache
+D:\AngularJSandC#\restfulAPI\restfulAPI\obj\Debug\netcoreapp2.1\restfulAPI.AssemblyInfo.cs
+D:\AngularJSandC#\restfulAPI\restfulAPI\obj\Debug\netcoreapp2.1\restfulAPI.RazorTargetAssemblyInfo.cache
+D:\AngularJSandC#\restfulAPI\restfulAPI\obj\Debug\netcoreapp2.1\restfulAPI.dll
+D:\AngularJSandC#\restfulAPI\restfulAPI\obj\Debug\netcoreapp2.1\restfulAPI.pdb
