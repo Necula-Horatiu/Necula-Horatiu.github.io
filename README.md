@@ -529,8 +529,10 @@ Ce face această funcție? Ne declaram doua variabile, vm.username și vm.parola
 
 Asemânator se face și pentru form-ul de logare, vă las pe voi să-l rezolvați, în caz de orice problemă ma gasiți ori pe email, ori pe facebook. Mersi frumos pentru timpul acordat și sper ca am fost de ajutor!
 
-email -> horatiu.necula@studentpartner.com / necula.horatiu@gmail.com
+Gasiti [aici](https://github.com/Necula-Horatiu/Necula-Horatiu.github.io) tot codul in caz de ceva
 
-facebook -> facebook.com/horatiuw
+### email -> horatiu.necula@studentpartner.com / necula.horatiu@gmail.com
 
-instagram -> instagram.com/horatiuw
+### facebook -> facebook.com/horatiuw
+
+### instagram -> instagram.com/horatiuw
