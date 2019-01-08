@@ -257,7 +257,7 @@ Prin ultimele 5 rânduri ne declarăm o variabilă globala, backendConfig care a
 
 Iar în folderul Properties, avem launchSettings.json de unde ștergem api/values pe rândurile 15 respectiv 23. Aveți grijă să nu ștergeți și ghilimele.
 
-Avem nevoie de un folder login, în interiorul folderului wwwroot în care avem doua fișiere login.html și login.js. Pentru a testa dacă totul merge bine în fișierul login.html, în body vom scrie {{1+2}}. Și înainte de a rula programul nu uitam să introducem în index.html noul fișier javascript.
+Avem nevoie de un folder login, în interiorul folderului wwwroot în care avem doua fișiere login.html și login.js. Pentru a testa dacă totul merge bine în fișierul login.html, în body vom scrie { { 1+2 } }. Și înainte de a rula programul nu uitam să introducem în index.html noul fișier javascript.
 
 <img src="img/setup8.PNG" alt="hi" class="inline"/>
 
