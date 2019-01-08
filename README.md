@@ -199,7 +199,170 @@ Cam asta e partea de back-end, bine înteles acesta se poate extinde foarte mult
 
 ### Front-end
 
-De acum vom lucra
+De acum vom lucra doar in folder-ul wwwroot. În primul rând avem nevoie de doua fișiere index.html și controller.js. Fișierul index.html reprezinta punctul de legatură între toate celelalte fișiere din programul nostru. Aici fiecare va ști de existența celorlalți. Momentan el va arăta așa
+
+```markdown
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</head>
+<body ng-app="mainApp">
+    <div ng-view></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Main CONTROLLER -->
+    <script src="./controller.js"></script>
+
+</body>
+</html>
+```
+
+Unde, link-ul respectiv scriptul din din head reprezinta bootstrap-ul (nu este necesar dar e bun la casa omului) și urmatoarele 3 scripturi din body sunt reprezentate de angularjs, angular-route si jquery; Prin ng-app="mainApp" ne declaram practic o aplicație de tipul AngularJS și prin urmatorul div o putem vedea. De asemenea tot în index.html trebuie să avem toate fișierele .js pe care le vom folosi în program.
+
+În controller.js ne propunem să realizăm routing-ul. Doar cu ajutorul routing-ului ne putem plimba pe diferite pagini în aplicația noastra. De obicei acesta se realizează în controlărul principal.
+
+```markdown
+var app = angular.module("mainApp", ["ngRoute"]);
+app.config(function ($routeProvider) {
+    $routeProvider
+        .when("/", {
+            templateUrl: "./login/login.html"
+        })
+});
+
+var serviceBase = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "") + location.pathname;
+if (serviceBase.substr(-1) !== '/')
+    serviceBase += '/';
+app.constant("backendConfig", {
+    url: serviceBase
+});
+```
+Ce vedem aici? Facem un model prin angular.module() care primește numele aplicației principale și functia de routing, ngRoute si ne declarăm niste rute. Mai pe scurt, când aplicația va întâlni "/" ne va redirecționa pe ./login/login.html (fișier pe care-l vom crea imediat) 
+
+Prin ultimele 5 rânduri ne declarăm o variabilă globala, backendConfig care are un atribut url ce ne va întoarce https://localhost:5001/ pentru a nu mai sta noi să o copiem de fiecare dată.
+
+Înainte de a face folderul login, mai trebuie să facem mici modificari pentru ca programul să deschida automat index.html. Dacă rulați acum programul veți observa că se deschide pe https://localhost:5001/api/values. Pentru asta întrăm în Startup.cs și copiem la sfărșit, dupa app.UseMvc() urmatoarele linii
+
+```markdown
+    app.UseAuthentication();
+    app.UseDefaultFiles();
+    app.UseStaticFiles();
+```
+
+Iar în folderul Properties, avem launchSettings.json de unde ștergem api/values pe rândurile 15 respectiv 23. Aveți grijă să nu ștergeți și ghilimele.
+
+Avem nevoie de un folder login, în interiorul folderului wwwroot în care avem doua fișiere login.html și login.js. Pentru a testa dacă totul merge bine în fișierul login.html, în body vom scrie {{1+2}}. Și înainte de a rula programul nu uitam să introducem în index.html noul fișier javascript.
+
+<img src="img/setup8.PNG" alt="hi" class="inline"/>
+
+În cazul în care aveți asta, totul ar trebui să fie în regulă.
+
+În continuare mai avem nevoie de un folder in wwwroot și anume Services în care facem două fișiere javascript, httpService.js respectiv dataContext.js (nu uitați să le adăugați și pe ele în index.html) În situația de față structura fișierelor ar trebui să fie urmatoarea.
+
+<img src="img/setup9.PNG" alt="hi" class="inline"/>
+
+Întrăm în httpService.js unde adăugam următorul cod
+
+```markdown
+(function () {
+    'use strict'
+
+    angular.module('mainApp').service('httpService', ['$http', '$q', 'backendConfig', function ($http, $q, backendConfig) {
+        var service = {
+            get: get,
+            post: post
+        };
+
+        function get(path) {
+            var deferred = $q.defer();
+
+            $http.get(backendConfig.url + path).then(
+                function (response) {
+                    deferred.resolve(response);
+                },
+                function (err, status) {
+                    deferred.reject(err);
+                }
+            );
+
+            return deferred.promise;
+        }
+
+        function post(path, data) {
+            var deferred = $q.defer();
+
+            $http.post(backendConfig.url + path, data).then(
+                function (response) {
+                    deferred.resolve(response);
+                },
+                function (err, status) {
+                    deferred.reject(err);
+                }
+            );
+
+            return deferred.promise;
+        }
+        return service;
+    }]);
+})();
+```
+
+Practic ne declarăm un serviciu (angular.module('mainApp').service()) ce are ca parametrii numele serviciului și diferite funcții / metode de care vom avea nevoie ($http, $q, backendConfig). 
+
+Ce reprezinta $http? Este un serviciu de baza ce ne faciliteaza comunicarea prin browser cu alte remote-uri ce folosesc HTTP. Aici vom gasi funcții ce ne vor ajuta să facem un get, post, etc
+
+Ce reprezinta $q? Practic este o promisiune pe care ne-o face server-ul noua în idea că.. băi, datele vor veni, nu știu când dar tu continuăți flow-ul prin aplicație făra griji (aceeasi chestie cu await-ul dacă ați auzit). Dacă nu ne-am folosi de promisiuni ar trebui ca programul să rămână blocat până când vin datele de la server (chestie care poate dura de la 5 secunde, la 1 minut, 10, idk)
+
+Apoi avem o variabila de tip service, ce are două atribute get, post fiecare fiind cate o functie. Aceste funcții funcționeaza pe principiul lui then(), adică așteaptă un răspuns de la server (răspuns ce poate fi unul afirmativ, gen niște date, sau o eroar) de aceea trebuie să facem câte doua funcții, în prima specificăm ce sa facem daca raspunsul este afirmativ și în a doua ce să facem dacă este un răspuns negativ.
+
+```markdown
+    function (response) {
+        eferred.resolve(response); <- raspuns bun
+    }, 
+    function (err, status) {
+        deferred.reject(err); <- raspuns rau
+    }
+```
+Aceste metode, vor sta la baza tuturor requesturilor voastre și vor fi scrise o singură dată în program.
+
+În fișierul dataContext.js avem următorul cod
+```markdown
+(function () {
+    'use strict'
+
+    angular.module('mainApp').service('dataContext', ['httpService', function (httpService) {
+        var service = {
+            getDummy: getDummy,
+            postDummy: postDummy,
+            logDummy: logDummy
+        };
+
+
+        function getDummy() {
+            return httpService.get('api/dummy');
+        }
+
+        function postDummy(nume, varsta, username, parola) {
+            return httpService.post('api/dummy', { Nume: nume, Varsta: varsta, Username: username, Parola: parola });
+        }
+
+        function logDummy(username, parola) {
+            return httpService.post('api/dummy/login', { username: username, parola: parola });
+        }
+
+        return service;
+    }]);
+})();
+```
+
+La fel ca mai sus, ne declarăm un serviciu (angular.module('mainApp').service()) ce primește ca parametrii numele său și alte utilitare pe care vrem să le folosim. Apoi avem o variabila ce are trei atribute, câte unul pentru fiecare ruta pe care vrem să o accesăm. 
+Acum e destul de simplă treaba, pentru metodele de get, trebuie doar să returnam httpService.get(ruta noastra), în schimb pentru metodele post avem nevoie să îi dăm si ce date să ni le salveze, respectiv să le caute în cazul ultimei funcții.
 
 ```markdown
 Syntax highlighted code block
