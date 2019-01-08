@@ -193,8 +193,13 @@ De ce se întâmplă asta? Pai dupa cum am văzut in controller am setat ruta pr
 La fel facem și pentru a 3a rută, singura diferență este că ruta se va modifica din https://localhost:5001/api/dummy în https://localhost:5001/api/dummylogin și avem grija ca datele din json corespunzătoare câmpurilor username și parolă să fie unele valide (de ex cele pe care tocmai le-am introdus) pentru ca requestul să ne întoarcă OK.
 
 Cam asta e partea de back-end, bine înteles acesta se poate extinde foarte mult dar vă las pe voi să descoperiți asta.
+În momentul de față structura fișierelor ar trebui să arate așa și să va mearga toate cele trei rute.
+
+<img src="img/setup7.PNG" alt="hi" class="inline"/>
 
 ### Front-end
+
+De acum vom lucra
 
 ```markdown
 Syntax highlighted code block
