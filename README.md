@@ -84,7 +84,7 @@ Deschidem visual studio. File > New > Project > Visual C# > Web > .NET Core > AS
 
 {
   "ConnectionStrings": {
-    "UserConnection": "Server=angulartestsv.database.windows.net;Database=AngularTEST; User Id=horatiu.necula; Password=#Dwcdtryv7727"
+    "UserConnection": "Server=angulartestsv.database.windows.net;Database=AngularTEST; User Id=; Password="
   },
 
   "Logging": {
